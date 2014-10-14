@@ -37,4 +37,6 @@ case "$1" in
     restart)
         run $2 restart
     ;;
+    *)
+        echo "Usage: regidiumctl {start|stop|restart} , optional parameter - module name"
 esac
