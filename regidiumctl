@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# Simple runner script for regidium application
+#
+
+supervisorctl=supervisorctl
+username=change_this_value
+password=change_this_value
+group=regidium.com:
+
+run() {
+    if [ ! -z "$2" ]
+        then
+            processModule $1 $2
+        else
+            runGroup $1
+    fi
+}
+
+runGroup(){
+    exec ${supervisorctl} -u ${username} -p ${password} $1 ${group}*
+    wait
+}
+
+processModule(){
+    exec ${supervisorctl} -u ${username} -p ${password} $2 $group$1
+    wait
+}
+
+case "$1" in
+    start)
+        run $2 start
+    ;;
+    stop)
+        run $2 stop
+    ;;
+    restart)
+        run $2 restart
+    ;;
+esac
