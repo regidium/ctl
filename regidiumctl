@@ -27,6 +27,10 @@ processModule(){
     wait
 }
 
+status(){
+    exec ${supervisorctl} -u ${username} -p ${password} status | grep ${group}
+}
+
 case "$1" in
     start)
         run $2 start
@@ -36,6 +40,9 @@ case "$1" in
     ;;
     restart)
         run $2 restart
+    ;;
+    status)
+        status
     ;;
     *)
         echo "Usage: regidiumctl {start|stop|restart} , optional parameter - module name"
